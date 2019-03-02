@@ -1,0 +1,64 @@
+<style type="text/css">
+	.side-nav {
+	  position: fixed;
+	  width: 50vh;
+	  z-index: 9999;
+	  top: 0;
+	  left: 0;
+	  height: 100vh;
+	  transition: left 0.15s ease-in-out;
+	}
+	.side-nav-container {
+	  position: fixed;
+	  width: 100vw;
+	  z-index: 9998;
+	  top: 0;
+	  left: 0;
+	  height: 100vh;
+	  background-color: rgba(0, 0, 0, 0.54);
+	}
+	.side-nav-hide {
+		left: -50vh;
+		transition: left 0.15s ease-in-out;
+	}
+	.navbar {
+		position: sticky;
+	    top: 0;
+	    z-index: 999;
+	}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-md">
+  <a class="navbar-brand" href="/#/home">
+  	<strong>Gear Eye</strong>
+  </a>
+  <button class="navbar-toggler side-nav-toggler" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div class="side-nav side-nav-hide bg-white shadow p-3">
+	<a class="btn btn-block btn-outline-primary side-nav-toggler" href="/#/home">Home</a>
+	<a class="btn btn-block btn-outline-primary side-nav-toggler" href="/#/settings">Settings</a>
+</div>
+<div class="side-nav-container" style="display: none;"></div>
+
+
+<script type="text/javascript">
+	$('.side-nav-toggler').click(() => {
+		$('.side-nav').toggleClass('side-nav-hide');
+		if ( $('.side-nav-container').css('display') == 'none' ) {
+			$('.side-nav-container').fadeIn();
+		} else {
+			$('.side-nav-container').fadeOut();
+		}
+	});
+	$('.side-nav-container').click(() => {
+		$('.side-nav').toggleClass('side-nav-hide');
+		if ( $('.side-nav-container').css('display') == 'none' ) {
+			$('.side-nav-container').fadeIn();
+		} else {
+			$('.side-nav-container').fadeOut();
+		}
+	});
+</script>

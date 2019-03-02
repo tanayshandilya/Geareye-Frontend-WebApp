@@ -1,0 +1,38 @@
+<div class="container-fluid p-4">
+	<h4>Settings</h4>
+	<hr>
+	<div class="shadow-sm card">
+		<div class="loader-container">
+			<div class="loader" style="display: none;"></div>
+		</div>
+		<div class="card-body">
+			<form>
+				<small class="mb-0 text-muted">Server Ip Address</small>
+				<input type="tel" name="ip-addr" class="form-control mb-2" placeholder="Server IP Address">
+				<small class="mb-0 text-muted">Server Port</small>
+				<input type="tel" name="ip-port" class="form-control mb-3" placeholder="Server Port">
+				<button class="btn btn-block btn-outline-success" type="submit">Save</button>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('input[name="ip-addr"]').val(app.serverIp);
+	$('input[name="ip-port"]').val(app.serverPort);
+	$('form').on('submit', (e) => {
+		e.preventDefault();
+		$('.loader').fadeIn();
+		$('input').attr('disabled','');
+		$('button').attr('disabled','');
+		app.serverIp = $('input[name="ip-addr"]').val();
+		app.serverPort = $('input[name="ip-port"]').val();
+		$('input[name="ip-addr"]').val(app.serverIp);
+		$('input[name="ip-port"]').val(app.serverPort);
+		setTimeout(() => {
+			$('.loader').fadeOut();
+			$('input').removeAttr('disabled');
+			$('button').removeAttr('disabled');
+			app.notify.success('Server settings saved');
+		}, 1200);
+	});
+</script>

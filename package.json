@@ -1,0 +1,19 @@
+{
+  "name": "svits-geareye-app",
+  "version": "1.0.0",
+  "description": "Progressive Web Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "http-server -m 5000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanayshandilya/svits-geareye-app.git"
+  },
+  "author": "Tanay Shandilya",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tanayshandilya/svits-geareye-app/issues"
+  },
+  "homepage": "https://github.com/tanayshandilya/svits-geareye-app#readme"
+}

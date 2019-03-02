@@ -1,0 +1,10 @@
+<div class="container-fluid p-4">
+	<app-items></app-items>
+</div>
+
+<script type="text/javascript">
+	const syncData = () => {
+		app.api.syncItems()
+	}
+	const syncCycle = setInterval(syncData, 2000);
+</script>
