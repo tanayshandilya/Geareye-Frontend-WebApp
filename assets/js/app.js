@@ -41,6 +41,20 @@ app.api = {
 	path: app.serverProtocol+app.serverIp+':'+app.serverPort,
 	data: []
 };
+
+app.truncateDB = () => {
+	$.post(`${app.api.path}/app/api/truncate`, {} , (resp) => {
+		if (resp.status === 'success') {
+			app.notify.success('List cleared successfully');
+			setTimeout(()=>{
+				window.location.hash = '#/home';
+			}, 1000);
+		} else {
+			app.notify.error('Could not clear the list please check the Settings');
+		}
+	});
+}
+
 app.api.syncItems = () => {
 	let _app_list = $('app-items');
 	$.post(`${app.api.path}/app/api/sync`, (res) => {
@@ -197,14 +211,62 @@ app.api.syncItems = () => {
 	});
 }
 
+app.api.syncCheckList = () => {
+	let _checklist = $('app-checklist');
+	$.post(`${app.api.path}/app/api/sync`, (resp) => {
+		if (resp.status === 'success') {
+			_checklist.html('');
+			for (var i = 0; i < resp.data.length; i++) {
+				let bg = 'bg-success';
+				if (resp.data[i].item_state === 'added') {
+					bg = 'bg-danger';
+				}
+				_checklist.append(
+					`<div class="card ${bg} shadow-md mb-3">
+				        <div class="card-body">
+				            <div class="row">
+				            	<div class="col-2">
+				            		<img style="height: 45px;filter: opacity(16%);" src="assets/images/item-icon.svg"/>
+				            	</div>
+				            	<div class="col-10">
+					            	<h4 class="mb-1 text-white">${resp.data[i].item_name}</h4>
+					            	<h6 class="mb-0">${resp.data[i].item_rfid}</h6>
+				            	</div>
+				            </div>
+				        </div>
+				    </div>`
+				);
+			}	
+		}
+	});
+}
+
 // ------------------------------------------ Main app initaion ------------------------------------------ //
 
+let checklistSyncCycle, syncCycle;
+
 app.router.on('/home', () => {
+	const syncData = () => {
+		app.api.syncItems()
+	}
+	syncCycle = setInterval(syncData, 1000);
+	clearTimeout(checklistSyncCycle);
 	app.loadContent('home');
 }).resolve();
 
 app.router.on('/settings', () => {
+	clearTimeout(syncCycle);
+	clearTimeout(checklistSyncCycle);
 	app.loadContent('settings');
+}).resolve();
+
+app.router.on('/checklist', () => {
+	const syncCheckList = () => {
+		app.api.syncCheckList()
+	}
+	checklistSyncCycle = setInterval(syncCheckList, 1000);
+	clearTimeout(syncCycle);
+	app.loadContent('checklist');
 }).resolve();
 
 app.loadHeader();

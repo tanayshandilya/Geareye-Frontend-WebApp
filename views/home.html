@@ -1,10 +1,8 @@
 <div class="container-fluid p-4">
-	<app-items></app-items>
+	<app-items>
+		<div class="text-center pt-5">
+			<img style="height: 150px" src="assets/images/add-icon.svg"/>
+			<h6 class="mt-3 text-muted">Waiting for items to be added</h6>
+		</div>
+	</app-items>
 </div>
-
-<script type="text/javascript">
-	const syncData = () => {
-		app.api.syncItems()
-	}
-	const syncCycle = setInterval(syncData, 2000);
-</script>
